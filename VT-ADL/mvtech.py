@@ -169,7 +169,7 @@ def ran_generator(length, shots=1):
         
         
 class Mvtec:
-    def __init__(self, batch_size,root="../", product= 'bottle'):
+    def __init__(self, batch_size,root="../../", product= 'bottle'):
         self.root = root
         self.batch = batch_size
         self.product = product
@@ -226,7 +226,7 @@ class Mvtec:
             
 if __name__ == "__main__":
     
-    root = "../"
+    root = "../../"
     # print('======== All Normal Data ============')
     # Train_data(root, 'all')
     # print('======== All Anomaly Data ============')
