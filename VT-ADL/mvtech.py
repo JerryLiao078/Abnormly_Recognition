@@ -73,7 +73,7 @@ def load_images(path, image_name):
     return imread(os.path.join(path,image_name))
 
     
-def Test_anom_data(root, product= 'bottle', use_good = False):
+def Test_anom_data(root='/content/', product= 'bottle', use_good = False):
     '''
     return the path of the train directory and list of train images
     
@@ -94,10 +94,24 @@ def Test_anom_data(root, product= 'bottle', use_good = False):
             read_files(root, d, product, data_motive = 'test',use_good = use_good,normal = False)
             
         elif product == d:
+            
             pth_img_dict= read_files(root, d, product,data_motive='test', use_good = use_good, normal = False)
-            return pth_img_dict
+            
+            sort_list=list(pth_img_dict.items())
+            sort_list[0][1].sort()
+            sort_list[1][1].sort()
+            sort_list[2][1].sort()
+            print(sort_list[0])
+            
+            pth_sortedimg_dict = OrderedDict()
+            pth_sortedimg_dict[sort_list[0][0]] = sort_list[0][1]
+            pth_sortedimg_dict[sort_list[1][0]] = sort_list[1][1]
+            pth_sortedimg_dict[sort_list[2][0]] = sort_list[2][1]
+
+            print(pth_sortedimg_dict)
+            return pth_sortedimg_dict
         
-def Test_anom_mask(root, product= 'bottle', use_good = False):
+def Test_anom_mask(root='/content/', product= 'bottle', use_good = False):
     '''
     return the path of the train directory and list of train images
     
@@ -111,6 +125,7 @@ def Test_anom_mask(root, product= 'bottle', use_good = False):
     Returns:
         Path and Image ordered dict for the test dataset
     '''
+    
     dir = os.listdir(root)
     
     for d in dir:
@@ -118,11 +133,26 @@ def Test_anom_mask(root, product= 'bottle', use_good = False):
             read_files(root, d, product, data_motive = 'test',use_good = use_good,normal = False)
             
         elif product == d:
+            
             pth_img_dict= read_files(root, d, product,data_motive='ground_truth', use_good = use_good, normal = False)
-            return pth_img_dict
+            
+            sort_list=list(pth_img_dict.items())
+            sort_list[0][1].sort()
+            sort_list[1][1].sort()
+            sort_list[2][1].sort()
+            print(sort_list[0])
+            
+            pth_sortedimg_dict = OrderedDict()
+            pth_sortedimg_dict[sort_list[0][0]] = sort_list[0][1]
+            pth_sortedimg_dict[sort_list[1][0]] = sort_list[1][1]
+            pth_sortedimg_dict[sort_list[2][0]] = sort_list[2][1]
+
+            print(pth_sortedimg_dict)
+            return pth_sortedimg_dict
+
         
 
-def Test_normal_data(root, product= 'bottle', use_good = True):
+def Test_normal_data(root='/content/', product= 'bottle', use_good = True):
     if product == 'all':
         print('Please choose a valid product. Normal test data can be seen product wise')
         return
@@ -169,7 +199,7 @@ def ran_generator(length, shots=1):
         
         
 class Mvtec:
-    def __init__(self, batch_size,root="../../", product= 'bottle'):
+    def __init__(self, batch_size,root="/content/", product= 'bottle'):
         self.root = root
         self.batch = batch_size
         self.product = product
@@ -221,12 +251,12 @@ class Mvtec:
             self.test_anom_loader = torch.utils.data.DataLoader(test_anom, batch_size = batch_size, shuffle=False)
             self.test_norm_loader = torch.utils.data.DataLoader(test_normal, batch_size=batch_size, shuffle=False)
             self.validation_loader = torch.utils.data.DataLoader(val_set, batch_size=batch_size, shuffle=False)
-        
+            
             
             
 if __name__ == "__main__":
     
-    root = "../../"
+    root = "/content"
     # print('======== All Normal Data ============')
     # Train_data(root, 'all')
     # print('======== All Anomaly Data ============')

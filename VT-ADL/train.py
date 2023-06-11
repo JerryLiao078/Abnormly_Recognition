@@ -91,6 +91,7 @@ for i in range(epoch):
 
         #Optimiser step
         loss.backward()
+        torch.nn.utils.clip_grad_norm_(parameters=model.parameters(), max_norm=5, norm_type=2)
         Optimiser.step()
     
     #Tensorboard definitions for the mean epoch values

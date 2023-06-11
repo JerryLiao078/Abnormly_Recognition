@@ -72,7 +72,7 @@ def Thresholding(data_load = loader[1:], upsample = 1, thres_type = 0, fpr_thres
                 i = torch.stack([i,i,i]).squeeze(2).permute(1,0,2,3)
             vector, reconstructions = model(i.cuda())
             pi, mu, sigma = G_estimate(vector)
-            
+           
             #Loss calculations
             loss1 = F.mse_loss(reconstructions,i.cuda(), reduction='mean') #Rec Loss
             loss2 = -ssim_loss(i.cuda(), reconstructions) #SSIM loss for structural similarity
@@ -127,6 +127,7 @@ def Patch_Overlap_Score(threshold, data_load = loader[1:], upsample =1):
     score_tn = []
     score_ta = []
     
+    
 
     for n,data in enumerate(data_load):
         total_loss_all = []
@@ -135,7 +136,7 @@ def Patch_Overlap_Score(threshold, data_load = loader[1:], upsample =1):
                 i = torch.stack([i,i,i]).squeeze(2).permute(1,0,2,3)
             vector, reconstructions = model(i.cuda())
             pi, mu, sigma = G_estimate(vector)
-           
+            
             #Loss calculations
             loss1 = F.mse_loss(reconstructions,i.cuda(), reduction='mean') #Rec Loss
             loss2 = -ssim_loss(i.cuda(), reconstructions) #SSIM loss for structural similarity
@@ -177,7 +178,8 @@ def Patch_Overlap_Score(threshold, data_load = loader[1:], upsample =1):
                 
             ## Plotting
             if c%5 == 0:
-                plot(i,j,score_map[0][0])
+                plot(i,j,score_map[0][0],n,c)
+                
             if n == 0:
                 score_tn.append(score_map.max())
             if n ==1:

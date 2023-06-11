@@ -49,7 +49,7 @@ def Binarization(mask, thres = 0., type = 0):
         mask = np.where(mask > thres, mask, 0.)
     return mask  
 
-def plot(image,grnd_truth, score):
+def plot(image,grnd_truth, score,num,cnum):
     plt.subplot(131)
     plt.imshow(image[0].permute(1,2,0))
     plt.subplot(132)
@@ -61,8 +61,9 @@ def plot(image,grnd_truth, score):
     # plt.title('Anomaly score')
     # plt.imshow(score[0].permute(1,2,0), cmap='Reds')
     plt.colorbar()
-    plt.pause(1) 
-    plt.show()          
+    
+    plt.savefig(f"./img/{num}_{cnum}.png") 
+             
 def binImage(heatmap, thres=0 ):
     _, heatmap_bin = cv2.threshold(heatmap , thres , 255 , cv2.THRESH_BINARY+cv2.THRESH_OTSU)
     # t in the paper
